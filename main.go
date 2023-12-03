@@ -19,22 +19,47 @@ func main() {
 	dayCounter := countDays(peopleAvailability)
 	preferredDays := sortKeyByValue(dayCounter)
 	excludedInPreferredDay := whosExcludedIn(preferredDays[0], peopleAvailability)
+	bestDayWithExcluded := bestDayForPeople(preferredDays, excludedInPreferredDay)
+	excludedInBestDayWithExcluded := whosExcludedIn(bestDayWithExcluded, peopleAvailability)
 
 	fmt.Println("---")
-	fmt.Println(peopleAvailability)
-	fmt.Println(dayCounter)
-	fmt.Println(preferredDays)
-	fmt.Println(excludedInPreferredDay)
+	fmt.Println("Availability of people: ", peopleAvailability)
+	fmt.Println("This is the count of the days: ", dayCounter)
+	fmt.Println("In order those are the preferred days: ", preferredDays)
+	fmt.Println("The preferred day is", preferredDays[0], " with ", dayCounter[preferredDays[0]], " person")
+	fmt.Println("But maybe there will be some excluded: ", excludedInPreferredDay)
+	fmt.Println("Excluded can be meet in this day: ", bestDayWithExcluded, " and in this day will be: ", dayCounter[bestDayWithExcluded], " person")
+	fmt.Println("But maybe there will be some excluded: ", excludedInBestDayWithExcluded)
 	fmt.Println("---")
 }
 
-func whosExcludedIn(thisDay int, peopleAvailability []PeopleAvailability) []string {
-	var excluded []string
+func bestDayForPeople(preferredDays []int, excludedInPreferredDay []PeopleAvailability) int {
+	bestDayWithExcluded := -1
+	for _, day := range preferredDays {
+		dayOk := 0
+		for _, person := range excludedInPreferredDay {
+			for _, personDay := range person.Days {
+				if personDay == day {
+					dayOk += 1
+					break
+				}
+			}
+		}
+		if dayOk == len(excludedInPreferredDay) {
+			bestDayWithExcluded = day
+			break
+		}
+	}
+	return bestDayWithExcluded
+}
+
+func whosExcludedIn(thisDay int, peopleAvailability []PeopleAvailability) []PeopleAvailability {
+	var excluded []PeopleAvailability
 
 	for _, person := range peopleAvailability {
 		isIt := isExcluded(thisDay, person.Days)
 		if isIt {
-			excluded = append(excluded, person.Name)
+			excluded = append(excluded, person)
 		}
 	}
 
