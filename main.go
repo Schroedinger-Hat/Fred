@@ -86,8 +86,8 @@ var docStyle = lipgloss.NewStyle().Margin(1, 2)
 func main() {
 	proposals := parseInputFile("input.txt")
 	m := model{list: list.New(proposals, list.NewDefaultDelegate(), 0, 0)}
-	p := tea.NewProgram(m, tea.WithAltScreen())
 	m.list.Title = "List of persons with day proposal"
+	p := tea.NewProgram(m, tea.WithAltScreen())
 
 	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running program:", err)
@@ -96,8 +96,8 @@ func main() {
 
 	preferredDays := buildPreferredDays(proposals)
 	m = model{list: list.New(preferredDays, list.NewDefaultDelegate(), 0, 0)}
-	p = tea.NewProgram(m, tea.WithAltScreen())
 	m.list.Title = "List of preferred day with excluded persons"
+	p = tea.NewProgram(m, tea.WithAltScreen())
 
 	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running program:", err)
