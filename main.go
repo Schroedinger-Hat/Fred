@@ -7,72 +7,152 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/charmbracelet/bubbles/list"
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
-type PeopleAvailability struct {
-	Name string
-	Days []int
+type proposal struct {
+	name string
+	days []int
 }
+
+func (i proposal) Title() string { return i.name }
+func (i proposal) Description() string {
+	resultString := ""
+
+	for index, value := range i.days {
+		resultString += strconv.Itoa(value)
+		if index < len(i.days)-1 {
+			resultString += ","
+		}
+	}
+
+	return resultString
+}
+func (i proposal) FilterValue() string { return i.name }
+
+type preferredDay struct {
+	day      int
+	excluded []proposal
+}
+
+func (i preferredDay) Title() string { return strconv.Itoa(i.day) }
+func (i preferredDay) Description() string {
+	resultString := ""
+
+	for index, value := range i.excluded {
+		resultString += value.name
+		if index < len(i.excluded)-1 {
+			resultString += ","
+		}
+	}
+
+	return resultString
+}
+func (i preferredDay) FilterValue() string { return strconv.Itoa(i.day) }
+
+type model struct {
+	list list.Model
+}
+
+func (m model) Init() tea.Cmd {
+	return nil
+}
+
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		if msg.String() == "ctrl+c" {
+			return m, tea.Quit
+		}
+	case tea.WindowSizeMsg:
+		h, v := docStyle.GetFrameSize()
+		m.list.SetSize(msg.Width-h, msg.Height-v)
+	}
+
+	var cmd tea.Cmd
+	m.list, cmd = m.list.Update(msg)
+	return m, cmd
+}
+
+func (m model) View() string {
+	return docStyle.Render(m.list.View())
+}
+
+var docStyle = lipgloss.NewStyle().Margin(1, 2)
 
 func main() {
-	peopleAvailability := parseInputFile("input.txt")
-	dayCounter := countDays(peopleAvailability)
-	preferredDays := sortKeyByValue(dayCounter)
-	excludedInPreferredDay := whosExcludedIn(preferredDays[0], peopleAvailability)
-	bestDayWithExcluded := bestDayForPeople(preferredDays, excludedInPreferredDay)
-	excludedInBestDayWithExcluded := whosExcludedIn(bestDayWithExcluded, peopleAvailability)
+	proposals := parseInputFile("input.txt")
+	m := model{list: list.New(proposals, list.NewDefaultDelegate(), 0, 0)}
+	p := tea.NewProgram(m, tea.WithAltScreen())
+	m.list.Title = "List of persons with day proposal"
 
-	fmt.Println("---")
-	fmt.Println("Availability of people: ", peopleAvailability)
-	fmt.Println("This is the count of the days: ", dayCounter)
-	fmt.Println("In order those are the preferred days: ", preferredDays)
-	fmt.Println("The preferred day is", preferredDays[0], " with ", dayCounter[preferredDays[0]], " person")
-	fmt.Println("But maybe there will be some excluded: ", excludedInPreferredDay)
-	fmt.Println("Excluded can be meet in this day: ", bestDayWithExcluded, " and in this day will be: ", dayCounter[bestDayWithExcluded], " person")
-	fmt.Println("But maybe there will be some excluded: ", excludedInBestDayWithExcluded)
-	fmt.Println("---")
+	if _, err := p.Run(); err != nil {
+		fmt.Println("Error running program:", err)
+		os.Exit(1)
+	}
+
+	preferredDays := buildPreferredDays(proposals)
+	m = model{list: list.New(preferredDays, list.NewDefaultDelegate(), 0, 0)}
+	p = tea.NewProgram(m, tea.WithAltScreen())
+	m.list.Title = "List of preferred day with excluded persons"
+
+	if _, err := p.Run(); err != nil {
+		fmt.Println("Error running program:", err)
+		os.Exit(1)
+	}
 }
 
-func bestDayForPeople(preferredDays []int, excludedInPreferredDay []PeopleAvailability) int {
-	bestDayWithExcluded := -1
-	for _, day := range preferredDays {
-		dayOk := 0
-		for _, person := range excludedInPreferredDay {
-			for _, personDay := range person.Days {
-				if personDay == day {
-					dayOk += 1
-					break
-				}
+func buildPreferredDays(items []list.Item) []list.Item {
+	var preferredDays []list.Item
+	sortedByKey := sortKeyByValue(countDays(items))
+	for _, actualDay := range sortedByKey {
+		preferredDay := *new(preferredDay)
+		preferredDay.day = actualDay
+		for _, item := range items {
+			isIt := isExcluded(actualDay, item.(proposal).days)
+			if isIt {
+				preferredDay.excluded = append(preferredDay.excluded, item.(proposal))
 			}
 		}
-		if dayOk == len(excludedInPreferredDay) {
-			bestDayWithExcluded = day
-			break
-		}
+		preferredDays = append(preferredDays, preferredDay)
 	}
-	return bestDayWithExcluded
+	return preferredDays
 }
 
-func whosExcludedIn(thisDay int, peopleAvailability []PeopleAvailability) []PeopleAvailability {
-	var excluded []PeopleAvailability
+func parseInputFile(input string) []list.Item {
+	file, err := os.Open(input)
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return nil
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	var persons []list.Item
 
-	for _, person := range peopleAvailability {
-		isIt := isExcluded(thisDay, person.Days)
-		if isIt {
-			excluded = append(excluded, person)
-		}
+	for scanner.Scan() {
+		persons = extractPerson(scanner, persons)
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Error reading file:", err)
 	}
 
-	return excluded
+	return persons
 }
 
-func isExcluded(thisDay int, days []int) bool {
-	for _, day := range days {
-		if day == thisDay {
-			return false
-		}
+func extractPerson(scanner *bufio.Scanner, persons []list.Item) []list.Item {
+	splitted := strings.SplitN(scanner.Text(), ":", 2)
+	person := *new(proposal)
+	person.name = splitted[0]
+	days := strings.ReplaceAll(splitted[1], " ", "")
+	for _, rawDay := range strings.Split(days, ",") {
+		day, _ := strconv.Atoi(rawDay)
+		person.days = append(person.days, day)
 	}
-	return true
+	persons = append(persons, person)
+	return persons
 }
 
 func sortKeyByValue(input map[int]int) []int {
@@ -97,10 +177,10 @@ func sortKeyByValue(input map[int]int) []int {
 	return output
 }
 
-func countDays(peopleAvailability []PeopleAvailability) map[int]int {
+func countDays(items []list.Item) map[int]int {
 	dayCounter := make(map[int]int)
-	for _, personAvailability := range peopleAvailability {
-		for _, day := range personAvailability.Days {
+	for _, item := range items {
+		for _, day := range item.(proposal).days {
 			if dayCounter[day] == 0 {
 				dayCounter[day] = 1
 			} else {
@@ -111,35 +191,11 @@ func countDays(peopleAvailability []PeopleAvailability) map[int]int {
 	return dayCounter
 }
 
-func parseInputFile(input string) []PeopleAvailability {
-	file, err := os.Open(input)
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return nil
+func isExcluded(thisDay int, days []int) bool {
+	for _, day := range days {
+		if day == thisDay {
+			return false
+		}
 	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-	var persons []PeopleAvailability
-
-	for scanner.Scan() {
-		persons = extractPerson(scanner, persons)
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading file:", err)
-	}
-
-	return persons
-}
-
-func extractPerson(scanner *bufio.Scanner, persons []PeopleAvailability) []PeopleAvailability {
-	splitted := strings.SplitN(scanner.Text(), ":", 2)
-	person := new(PeopleAvailability)
-	person.Name = splitted[0]
-	days := strings.ReplaceAll(splitted[1], " ", "")
-	for _, rawDay := range strings.Split(days, ",") {
-		day, _ := strconv.Atoi(rawDay)
-		person.Days = append(person.Days, day)
-	}
-	persons = append(persons, *person)
-	return persons
+	return true
 }

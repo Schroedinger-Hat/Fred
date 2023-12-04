@@ -70,25 +70,13 @@ person3name: 4, 28, 30
 After you update the input.txt, just run:
 
 ```bash
+go mod tidy
 go run main.go
 ```
 
-The result with the example below should be this:
+![example.gif](public/example.gif)
 
-```
----
-Availability of people:  [{person1name [1 20 25]} {person1name [1 15 21 23 30]} {person3name [4 28 30]}
-]
-This is the count of the days:  map[1:2 4:1 15:1 20:1 21:1 23:1 25:1 28:1 30:2]
-In order those are the preferred days:  [1 30 23 4 28 25 15 21 20]
-The preferred day is 1  with  2  person
-But maybe there will be some excluded:  [{person3name [4 28 30]}]
-Excluded can be meet in this day:  30  and in this day will be:  2  person
-But maybe there will be some excluded:  [{person1name [1 20 25]}]
----
-```
-
-That's it for now.
+The first list is the parsed input and the second is the preferred day ordered by number of presents with excluded person.
 
 ## Contributing
 
