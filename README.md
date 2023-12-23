@@ -10,22 +10,22 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h1>Budday</h1>
+  <h1>Fred</h1>
   
-  <a href="https://github.com/Schrodinger-Hat/Budday">
+  <a href="https://github.com/Schrodinger-Hat/Fred">
     <img src="public/sh.png" alt="Logo" width="80" height="80">
   </a>
 
   <p align="center">
     <br />
-    <a href="https://github.com/Schrodinger-Hat/Budday/blob/main/README.md"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Schrodinger-Hat/Fred/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://www.schrodinger-hat.it/">View Demo</a>
     ·
-    <a href="https://github.com/Schrodinger-Hat/Budday/issues">Report Bug</a>
+    <a href="https://github.com/Schrodinger-Hat/Fred/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Schrodinger-Hat/Budday/issues">Request Feature</a>
+    <a href="https://github.com/Schrodinger-Hat/Fred/issues">Request Feature</a>
   </p>
 </div>
 
@@ -51,7 +51,11 @@
 
 I needed to find a perfect, or nearly perfect, day to schedule a dinner with a group of friends and for this I build this tool to find a spot where most of us can partecipate.
 
-Budday stands for **BUD**dies **DAY** so the day where we celebrate our friendship.
+### The name
+
+The famous nephew **Fred** attempting to invite Scrooge to dinner with his family.
+
+~Budday stands for **BUD**dies **DAY** so the day where we celebrate our friendship.~
 
 ### Tech stack
 
@@ -91,17 +95,17 @@ Don't forget to give the project a star! Thanks again!
 
 Schrodinger's Hat Team - [@schrodinger_hat](mailto:us@schrodinger-hat.it)
 
-Project Link: [https://github.com/Schrodinger-Hat/Budday](https://github.com/Schrodinger-Hat/Budday)
+Project Link: [https://github.com/Schrodinger-Hat/Fred](https://github.com/Schrodinger-Hat/Fred)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/Schrodinger-Hat/Budday.svg?style=for-the-badge
-[contributors-url]: https://github.com/Schrodinger-Hat/Budday/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Schrodinger-Hat/Budday.svg?style=for-the-badge
-[forks-url]: https://github.com/Schrodinger-Hat/Budday/network/members
-[stars-shield]: https://img.shields.io/github/stars/Schrodinger-Hat/Budday?style=for-the-badge
-[stars-url]: https://github.com/Schrodinger-Hat/Budday/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Schrodinger-Hat/Budday.svg?style=for-the-badge
-[issues-url]: https://github.com/Schrodinger-Hat/Budday/issues
+[contributors-shield]: https://img.shields.io/github/contributors/Schrodinger-Hat/Fred.svg?style=for-the-badge
+[contributors-url]: https://github.com/Schrodinger-Hat/Fred/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Schrodinger-Hat/Fred.svg?style=for-the-badge
+[forks-url]: https://github.com/Schrodinger-Hat/Fred/network/members
+[stars-shield]: https://img.shields.io/github/stars/Schrodinger-Hat/Fred?style=for-the-badge
+[stars-url]: https://github.com/Schrodinger-Hat/Fred/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Schrodinger-Hat/Fred.svg?style=for-the-badge
+[issues-url]: https://github.com/Schrodinger-Hat/Fred/issues
 
