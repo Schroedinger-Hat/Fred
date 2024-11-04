@@ -12,20 +12,20 @@
 <div align="center">
   <h1>Fred</h1>
   
-  <a href="https://github.com/Schrodinger-Hat/Fred">
+  <a href="https://github.com/schroedinger-Hat/Fred">
     <img src="public/sh.png" alt="Logo" width="80" height="80">
   </a>
 
   <p align="center">
     <br />
-    <a href="https://github.com/Schrodinger-Hat/Fred/blob/main/README.md"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/schroedinger-Hat/Fred/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://www.schrodinger-hat.it/">View Demo</a>
+    <a href="https://www.schroedinger-hat.org/">View Demo</a>
     ·
-    <a href="https://github.com/Schrodinger-Hat/Fred/issues">Report Bug</a>
+    <a href="https://github.com/schroedinger-Hat/Fred/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Schrodinger-Hat/Fred/issues">Request Feature</a>
+    <a href="https://github.com/schroedinger-Hat/Fred/issues">Request Feature</a>
   </p>
 </div>
 
@@ -93,19 +93,19 @@ Don't forget to give the project a star! Thanks again!
 
 ## Contact
 
-Schrodinger's Hat Team - [@schrodinger_hat](mailto:us@schrodinger-hat.it)
+Schrödinger's Hat Team - [@schroedinger_hat](mailto:dev@schroedinger-hat.org)
 
-Project Link: [https://github.com/Schrodinger-Hat/Fred](https://github.com/Schrodinger-Hat/Fred)
+Project Link: [https://github.com/schroedinger-Hat/Fred](https://github.com/schroedinger-Hat/Fred)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/Schrodinger-Hat/Fred.svg?style=for-the-badge
-[contributors-url]: https://github.com/Schrodinger-Hat/Fred/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Schrodinger-Hat/Fred.svg?style=for-the-badge
-[forks-url]: https://github.com/Schrodinger-Hat/Fred/network/members
-[stars-shield]: https://img.shields.io/github/stars/Schrodinger-Hat/Fred?style=for-the-badge
-[stars-url]: https://github.com/Schrodinger-Hat/Fred/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Schrodinger-Hat/Fred.svg?style=for-the-badge
-[issues-url]: https://github.com/Schrodinger-Hat/Fred/issues
+[contributors-shield]: https://img.shields.io/github/contributors/schroedinger-Hat/Fred.svg?style=for-the-badge
+[contributors-url]: https://github.com/schroedinger-Hat/Fred/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/schroedinger-Hat/Fred.svg?style=for-the-badge
+[forks-url]: https://github.com/schroedinger-Hat/Fred/network/members
+[stars-shield]: https://img.shields.io/github/stars/schroedinger-Hat/Fred?style=for-the-badge
+[stars-url]: https://github.com/schroedinger-Hat/Fred/stargazers
+[issues-shield]: https://img.shields.io/github/issues/schroedinger-Hat/Fred.svg?style=for-the-badge
+[issues-url]: https://github.com/schroedinger-Hat/Fred/issues
 
